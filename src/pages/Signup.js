@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import '../App.css';
 import './Login';
+import {useForm} from 'react-hook-form';
+import { showAlert, showToast } from '../Components/Alerts';
+
 
 const Signup = () => {
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [repassword, setRepassword] = useState('');
-    const [fullname, setFullName] = useState('');
-    const [email, setEmail] = useState('');
+    const {register , handleSubmit , formState: { errors } } = useForm();
 
     const handleSignup = () => {
         // Validate the username and password 
@@ -29,14 +28,14 @@ const Signup = () => {
                 alert('Passwords do not match');
             }
         } else {
-            alert('Fill in all required fields.');
+            showAlert('error','Signup error', 'Fill in all required fields. ');;
         }
     };
 
     return (
         <div className="mainContainer">
             <div className="container">
-                <div className="card">
+                <form className="card" onSubmit={handleSubmit(handleSignup)}>
                 <h2 className="h2">
                 Signup
                 </h2>
@@ -45,9 +44,17 @@ const Signup = () => {
                 <input 
                     className="input"
                     type="text"
-                    value={fullname}
-                    onChange={(e) => setFullName(e.target.value)}
+                    {...register('fullname', {required: "Please enter your username"})}
+
                 />
+
+                    {errors.fullname &&
+                        <div className='input-label'>
+                            <label className="invalid">{errors.username.message}</label>
+                            <br/>
+                        </div>
+                    }
+
             </label>
             <br />
             <label>
@@ -56,18 +63,34 @@ const Signup = () => {
                     id="email" // Make sure to add the id here
                     className="input"
                     type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    {...register('email', {required: "Please enter your username"})}
+
                 />
+
+                    {errors.email &&
+                        <div className='input-label'>
+                            <label className="invalid">{errors.username.message}</label>
+                            <br/>
+                        </div>
+                    }
+
             </label>
             <label>
                 Username*:
                 <input
                     className="input"
                     type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    {...register('username', {required: "Please enter your username"})}
+
                 />
+
+                    {errors.username &&
+                        <div className='input-label'>
+                            <label className="invalid">{errors.username.message}</label>
+                            <br/>
+                        </div>
+                    }
+
             </label>
             <br />
             <label>
@@ -76,8 +99,17 @@ const Signup = () => {
                     className="input"
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    {...register('password', {required: "Please enter your username"})}
+
                 />
+
+                    {errors.password &&
+                        <div className='input-label'>
+                            <label className="invalid">{errors.username.message}</label>
+                            <br/>
+                        </div>
+                    }
+
             </label>
             <br />
             <label>
@@ -85,13 +117,21 @@ const Signup = () => {
                 <input 
                     className="input"
                     type="password"
-                    value={repassword}
-                    onChange={(e) => setRepassword(e.target.value)}
+                    {...register('repassword', {required: "Please enter your username"})}
+
                 />
+
+                    {errors.repassword &&
+                        <div className='input-label'>
+                            <label className="invalid">{errors.username.message}</label>
+                            <br/>
+                        </div>
+                    }
+
             </label>
-                    <button onClick={handleSignup} className="button">Signup</button> 
+                    <button  className="button">Signup</button> 
                     <Link to="/login">Already have an account? Login</Link>
-                </div>
+                </form>
             </div>
         </div>
     );

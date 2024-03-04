@@ -94,3 +94,11 @@
 .h2{
   text-align: center;
 }
+
+.invalid{
+  color: rgba(224, 3, 3, 0.365);
+  font-size: x-small;
+  font-style: italic;
+  width: 50%;
+
+}
